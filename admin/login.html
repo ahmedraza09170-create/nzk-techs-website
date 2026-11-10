@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#493326">
+<title>Admin Login | NZK Techs</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link href="/admin/admin.css" rel="stylesheet">
+</head><body>
+<main class="login">
+  <section class="login-art" aria-hidden="false">
+    <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><div class="grid-lines"></div>
+    <div class="brand">NZK <span>Techs</span></div>
+    <div>
+      <h2>Every enquiry, in one calm place.</h2>
+      <p>Read new messages, reply on WhatsApp and keep track of who you have already answered.</p>
+      <div class="art-points">
+        <div><i>&#10003;</i>New enquiries appear automatically</div>
+        <div><i>&#10003;</i>Status and private notes for your team</div>
+        <div><i>&#10003;</i>Export everything to Excel (CSV)</div>
+      </div>
+    </div>
+    <small style="color:#cdb9a6">&copy; NZK Techs &middot; Private area</small>
+  </section>
+  <section class="login-side">
+    <form class="login-card" id="f" autocomplete="on">
+      <h1>Welcome back</h1>
+      <p class="sub">Log in to open the admin panel.</p>
+      <div class="field"><label for="u">Username</label><input id="u" name="username" autocomplete="username" required autofocus></div>
+      <div class="field"><label for="p">Password</label><input id="p" name="password" type="password" autocomplete="current-password" required><button type="button" class="toggle" id="eye" aria-label="Show password">Show</button></div>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn" id="go" type="submit"><span class="spin"></span><span id="gol">Log in</span></button>
+      <div class="secure">&#128274; Protected area. Only the NZK team can enter.</div>
+    </form>
+  </section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+fetch("/api/admin/me").then(r=>r.json()).then(d=>{ if(d.ok) location.replace("/admin"); }).catch(()=>{});
+$("eye").onclick=()=>{const s=$("p").type==="password";$("p").type=s?"text":"password";$("eye").textContent=s?"Hide":"Show";};
+$("f").addEventListener("submit", async e => {
+  e.preventDefault();
+  const go=$("go"), err=$("err"), card=$("f");
+  go.disabled=true; go.classList.add("is-loading"); $("gol").textContent="Checking..."; err.textContent="";
+  const t0=Date.now();
+  try {
+    const r = await fetch("/api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:$("u").value,password:$("p").value})});
+    const d = await r.json().catch(()=>({}));
+    await new Promise(r=>setTimeout(r,Math.max(0,700-(Date.now()-t0))));
+    if(r.ok&&d.ok){ $("gol").textContent="Welcome!"; go.classList.remove("is-loading"); setTimeout(()=>location.replace("/admin"),250); return; }
+    err.textContent=d.message||"Login failed.";
+  } catch { err.textContent="Could not reach the server."; }
+  card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+  go.disabled=false; go.classList.remove("is-loading"); $("gol").textContent="Log in";
+});
+</script></body></html>

@@ -1,0 +1,77 @@
+/* ===== v5: form loading state, toast, home hero ===== */
+
+/* ---- Send button: loading + done ---- */
+.btn-brand { display: inline-flex; align-items: center; justify-content: center }
+.btn-spinner { display: none; width: 17px; height: 17px; margin-right: 10px; flex: none; border: 2px solid rgba(255, 255, 255, .35); border-top-color: #fff; border-radius: 50%; animation: nzkSpin .7s linear infinite }
+.btn-brand.is-loading .btn-spinner { display: inline-block }
+.btn-brand.is-loading > i.bi { display: none }
+.btn-brand.is-loading:disabled { opacity: 1; cursor: progress }
+.btn-brand.is-done:disabled { opacity: 1; cursor: default; background: #2f7d4f; border-color: #2f7d4f }
+.btn-brand.is-done > i.bi:before { content: "\f26e" } /* bi-check-lg */
+form.is-sending .form-control { opacity: .6; pointer-events: none }
+@keyframes nzkSpin { to { transform: rotate(360deg) } }
+
+/* ---- Toast ---- */
+.nzk-toast { position: fixed; right: 22px; bottom: 22px; z-index: 2000; display: flex; gap: 14px; align-items: center; max-width: min(380px, calc(100vw - 32px)); padding: 16px 20px; border-radius: 16px; background: #171513; color: #fff; box-shadow: 0 24px 60px rgba(23, 21, 19, .35); transform: translateY(24px); opacity: 0; pointer-events: none; transition: transform .45s cubic-bezier(.2, .9, .3, 1.2), opacity .3s }
+.nzk-toast.show { transform: none; opacity: 1 }
+.nzk-toast > i { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 50%; background: #2f7d4f; font-size: 1.1rem }
+.nzk-toast strong { display: block; font-family: Manrope, sans-serif }
+.nzk-toast span { font-size: .85rem; color: #cfc7bf }
+
+/* ---- Home hero ---- */
+body[data-page="home"] .hero {
+  background:
+    radial-gradient(60% 70% at 85% 20%, rgba(169, 135, 109, .34), transparent 60%),
+    radial-gradient(50% 60% at 10% 90%, rgba(118, 84, 63, .16), transparent 60%),
+    linear-gradient(115deg, #f5f0e9 0%, #f9f7f3 50%, #eadfd3 100%);
+  background-size: 140% 140%, 140% 140%, 100% 100%;
+  animation: heroDrift 18s ease-in-out infinite alternate;
+}
+@keyframes heroDrift { from { background-position: 0% 0%, 100% 100%, 0 0 } to { background-position: 100% 30%, 0% 60%, 0 0 } }
+body[data-page="home"] .hero:before, body[data-page="home"] .hero:after, body[data-page="home"] .hero-orbit { display: none }
+body[data-page="home"] .hero h1 { letter-spacing: -.05em }
+
+.hero-now { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 28px; padding: 9px 16px; border-radius: 999px; background: rgba(255, 255, 255, .7); border: 1px solid var(--line); backdrop-filter: blur(6px); font-size: .92rem; color: #6d655e }
+.hero-now-dot { width: 9px; height: 9px; border-radius: 50%; background: #2f7d4f; box-shadow: 0 0 0 0 rgba(47, 125, 79, .5); animation: nowPulse 2s infinite }
+@keyframes nowPulse { to { box-shadow: 0 0 0 10px rgba(47, 125, 79, 0) } }
+.rotator { color: var(--brown); font-weight: 800; min-width: 7ch }
+.rotator:after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -.12em; background: var(--brown2); animation: caret 1s steps(1) infinite }
+@keyframes caret { 50% { opacity: 0 } }
+
+.hv { position: relative; min-height: 470px; perspective: 1200px }
+.hv-glow { position: absolute; inset: 8% 2% 2% 8%; border-radius: 40px; background: linear-gradient(135deg, #a9876d, #493326); filter: blur(46px); opacity: .28 }
+.hv-browser { position: absolute; right: 2%; top: 5%; width: 88%; border-radius: 18px; background: #fff; border: 1px solid rgba(73, 51, 38, .14); box-shadow: 0 40px 90px rgba(35, 25, 18, .22); overflow: hidden; transform: rotateY(-7deg) rotateX(3deg); transition: transform .5s ease; will-change: transform }
+.hv-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; background: #f3ede6; border-bottom: 1px solid var(--line) }
+.hv-bar i { width: 11px; height: 11px; border-radius: 50%; background: #d8cbbd }
+.hv-bar i:first-child { background: #d98b6a } .hv-bar i:nth-child(2) { background: #e3c06f } .hv-bar i:nth-child(3) { background: #8fb88f }
+.hv-bar span { flex: 1; margin-left: 10px; padding: 5px 12px; border-radius: 999px; background: #fff; font-size: .74rem; color: var(--muted); max-width: 240px }
+.hv-screen { position: relative; line-height: 0 }
+.hv-screen img { width: 100%; height: 330px; object-fit: cover }
+.hv-scan { position: absolute; left: 0; right: 0; top: 0; height: 90px; background: linear-gradient(180deg, transparent, rgba(255, 255, 255, .35), transparent); animation: hvScan 5s ease-in-out infinite }
+@keyframes hvScan { 0% { transform: translateY(-100%) } 60%, 100% { transform: translateY(420%) } }
+
+.hv-card { position: absolute; z-index: 3; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: rgba(255, 255, 255, .88); backdrop-filter: blur(10px); border: 1px solid rgba(73, 51, 38, .12); box-shadow: 0 18px 40px rgba(35, 25, 18, .16); animation: hvFloat 6s ease-in-out infinite }
+.hv-card i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--brown); color: #fff; font-size: 1.05rem }
+.hv-card b { display: block; font-family: Manrope, sans-serif; font-size: .92rem; line-height: 1.2 }
+.hv-card small { color: var(--muted); font-size: .74rem }
+.hv-card-a { left: -2%; top: 14%; animation-delay: -1s }
+.hv-card-b { right: -1%; bottom: 20%; animation-delay: -3s }
+.hv-card-c { left: 6%; bottom: 4%; animation-delay: -4.5s }
+@keyframes hvFloat { 50% { transform: translateY(-12px) } }
+
+@media (max-width: 991px) {
+  .hv { min-height: 400px; margin-top: 10px }
+  .hv-browser { width: 94%; transform: none }
+  .hv-screen img { height: 250px }
+  .hv-card-a { left: 0 } .hv-card-b { right: 0 } .hv-card-c { left: 3% }
+}
+@media (max-width: 575px) {
+  .hv { min-height: 340px }
+  .hv-screen img { height: 200px }
+  .hv-card small { display: none }
+  .hv-card { padding: 9px 12px }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="home"] .hero, .hv-card, .hv-scan, .hero-now-dot, .rotator:after, .btn-spinner { animation: none }
+  .btn-spinner { animation: nzkSpin 1.4s linear infinite }
+}

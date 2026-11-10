@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#241812">
+<title>Admin Panel | NZK Techs</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link href="/admin/admin.css" rel="stylesheet">
+</head><body>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="brand">NZK <span>Techs</span></div>
+    <nav class="nav">
+      <a href="#" class="active" id="nav-all">&#9638; Enquiries <span class="count" id="newCount" hidden></span></a>
+      <button id="export">&#8681; Export CSV</button>
+      <button id="refresh">&#8635; Refresh</button>
+    </nav>
+    <div class="grow"></div>
+    <div class="who"><div class="avatar">A</div><div><b>Admin</b><div style="font-size:12px;color:#a8937f">NZK Techs</div></div></div>
+    <nav class="nav"><button id="logout">&#10162; Log out</button></nav>
+  </aside>
+  <main class="main">
+    <div class="head">
+      <div><h1 id="hello">Dashboard</h1><p id="sub">Your website enquiries at a glance.</p></div>
+      <div class="actions"><button class="btn ghost menu-btn" id="menu">Menu</button><a class="btn ghost" href="/" target="_blank" rel="noopener">View website</a></div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="grid2">
+      <div class="card"><h3>Enquiries this week</h3><div class="hint">Last 7 days</div><div class="chart" id="chart"></div></div>
+      <div class="card"><h3>Status</h3><div class="hint">How many you have handled</div><div class="split" id="split"></div></div>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-s="">All</button><button class="tab" data-s="new">New</button><button class="tab" data-s="read">Read</button><button class="tab" data-s="replied">Replied</button>
+    </div>
+    <div class="tools"><input id="search" type="search" placeholder="Search name, email, phone or message..." aria-label="Search enquiries"><button class="btn ghost" id="clear">Clear</button></div>
+    <div class="panel">
+      <table><thead><tr><th>Person</th><th>Contact</th><th>Message</th><th>Date</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table>
+      <div class="empty" id="empty" hidden>No enquiries found.</div>
+      <div class="pager"><span id="count"></span><span><button class="btn ghost sm" id="prev">Previous</button> <button class="btn ghost sm" id="next">Next</button></span></div>
+    </div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Enquiry details">
+  <header><div class="avatar" id="d-av"></div><div><h3 id="d-name"></h3><small id="d-date"></small></div><button id="d-close" aria-label="Close">&times;</button></header>
+  <div class="dbody">
+    <div class="info">
+      <div><b>Phone</b><span id="d-phone"></span></div>
+      <div><b>Email</b><span id="d-email"></span></div>
+      <div><b>Mails</b><span id="d-mail"></span></div>
+    </div>
+    <div><label>Message</label><div class="msgbox" id="d-msg"></div></div>
+    <div><label for="d-status">Status</label><select id="d-status"><option value="new">New</option><option value="read">Read</option><option value="replied">Replied</option></select></div>
+    <div><label for="d-note">Internal note</label><textarea id="d-note" rows="3" maxlength="1000" placeholder="Only your team sees this"></textarea></div>
+  </div>
+  <div class="dfoot"><button class="btn" id="d-save">Save</button><a class="btn ghost" id="d-wa" target="_blank" rel="noopener">WhatsApp</a><a class="btn ghost" id="d-mailto">Email</a><button class="btn danger" id="d-del">Delete</button></div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+<script src="/admin/admin.js"></script>
+</body></html>
